@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+    body { font-family: Arial; padding: 2rem; max-width: 400px; margin: auto; }
+    input { display: block; margin-bottom: 1rem; width: 100%; padding: 0.5rem; }
+    button { padding: 0.5rem 1rem; }
+  </style>
+</head>
+<body>
+  <h2>Login ke Aplikasi</h2>
+  <input type="email" id="email" placeholder="Email" />
+  <input type="password" id="password" placeholder="Password" />
+  <button onclick="login()">Login</button>
+  <p id="message"></p>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    const supabase = createClient(
+      'https://nbaujzhlprwyrjbnwnoe.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5iYXVqemhscHJ3eXJqYm53bm9lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5ODYxODYsImV4cCI6MjA2NjU2MjE4Nn0.demS-RBTleCvel8NKdknT8yXhMJIYK-es6utO_T4jnk'
+    );
+
+    window.login = async () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        document.getElementById("message").textContent = "Login gagal: " + error.message;
+      } else {
+        document.getElementById("message").textContent = "Login berhasil! Mengalihkan...";
+        setTimeout(() => {
+          window.location.href = "home.html"; 
+        }, 1500);
+      }
+    };
+  </script>
+</body>
+</html>
+
